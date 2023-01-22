@@ -1,511 +1,30 @@
-
 <html>
+
     <head>
-      <meta name="viewport" content="width=device-width">
-      <link rel="icon" type="image/x-icon" href="/resource/assets/icon/favicon.ico">
-      <title>Le mur à pépite</title>
-  
-      <style>
-          @font-face {
-              font-family: "Oswald";
-              src: url("resource/fonts/Oswald/Oswald-VariableFont_wght.ttf");
-          }
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" type="image/x-icon" href="/resource/assets/icon/favicon.ico">
+        <title>Le mur à pépite</title>
 
-          @font-face {
-              font-family: "Courgette";
-              src: url("/resource/fonts/Courgette/Courgette-Regular.ttf");
-          }
-      </style>
+        <link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
+        <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
+        <link rel="stylesheet" href="/resource/vendor/paginationJs/2.5.0/pagination.min.css" />
+        <link rel="stylesheet" href="/resource/css/helper.css" />
+        <link rel="stylesheet" href="/resource/css/header.css" />
+        <link rel="stylesheet" href="/resource/css/footer.css" />
+        <link rel="stylesheet" href="/resource/css/pagination.css" />
+        <link rel="stylesheet" href="/resource/css/reaction.css" />
+        <link rel="stylesheet" href="/resource/css/nugget.css" />
+        <link rel="stylesheet" href="/resource/css/nugget-reaction.css" />
+        <link rel="stylesheet" href="/resource/css/notes-viewer.css" />
+        <link rel="stylesheet" href="/resource/css/main-theme.css" />
 
-<link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
-  
-      <style>
-        .note-container {
-            text-align: center;
-            min-width: 275px;
-            max-width: 600px;
-            margin: 10px;
-            margin-bottom: 60px;
-        }
-        .note {
-            font-family: 'Oswald' !important;
-            background-color: #f7348c;
-            padding: 10px;
-        }
-        .note-header {
-            padding-bottom: 30px;
-        }
-
-        .note-content {
-            word-wrap: break-word;      /* IE 5.5-7 */
-            white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
-            white-space: pre-wrap;      /* current browsers */
-            font-size: 25px;
-            text-align: center;
-        }
-
-        .note-title {
-            text-align: center;
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        .note-body-header {
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        .note-content-body {
-            font-size: 28px;
-            font-weight: bold;
-            padding-top: 15px;
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        .note-body {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 0px;
-            grid-auto-rows: auto;
-            padding-top: 25px;
-        }
-
-        .note-body-footer {
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        .note-subtitle {
-            text-align: center;
-            font-size: 15px;
-        }
-
-        .note-footer {
-            padding-top: 30px;
-            font-size: 30px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .note-content-footer {
-            padding-top: 25px;
-            font-size: 23px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-      </style>
-
-      <style>
-
-        
-        .reaction-button {
-            height:100px;
-            margin:0 auto;
-            position: relative;
-        }
-
-        .reaction-button > i {
-            cursor:pointer;
-            padding:10px 12px 8px;
-            background:#f7348c;
-            border-radius:50%;
-            display:inline-block;
-            margin:0 0 15px;
-            color: white;
-            transition:.2s;
-        }
-
-        .reaction-button > i:hover {
-            color:#f7348c;
-            background:#ffffff;
-        }
-
-        .reaction-button > i:before {
-            font-style:normal;
-        }
-
-        .reaction-button > span {
-            position: absolute;
-            bottom:70px;
-            left: 0;
-            right:0;
-            visibility: hidden;
-            transition:.6s;
-            z-index:-2;
-            font-size:2px;
-            color:transparent;
-            font-weight:400;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .reaction-button > i.press {
-            animation: reaction-button-size .4s;
-            color: green;
-        }
-
-        .reaction-button > span.press {
-            bottom:120px;
-            font-size:14px;
-            visibility:visible;
-            animation: reaction-button-fade 1s;
-            display: inline-table;
-        }
-
-        @keyframes reaction-button-fade {
-            0% {
-                color: transparent;
-                z-index: 1000;
+        <style>
+            .note-container-template {
+                display: none !important;
             }
-            50% {
-                color:white;
-                font-size: 15px;
-                font-weight: bold;
-            }
-            100% {color: transparent;}
-        }
+        </style>
+    </head>
 
-        @keyframes reaction-button-size {
-            0% {padding:10px 12px 8px;}
-            50% {padding:14px 16px 12px;  
-                margin-top:-4px;}
-            100% {padding:10px 12px 8px;}
-        }
-
-        .reaction-counter {
-            text-align: center;
-        }
-
-        .reaction-counter-value {
-            color: #262324;
-            font-weight: bold;
-        }
-
-        .reaction-counter-info {
-            color: #262324;
-            font-style: italic;
-        }
-
-      </style>
-
-      <style>
-
-        .reactions-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-items: center;
-            height: 70px;
-            padding-top: 15px;
-            padding-bottom: 50px;
-            opacity: 0;
-            border-top: solid white 0.5em;
-            background: linear-gradient(#f7348c, #f291b0);
-        }
-
-        .like-reaction-button {
-            padding: 10px;
-        }
-
-        .like-reaction-button > i.press {
-            color:#e23b3b;
-            background-color: #ffffff;
-        }
-
-        .like-reaction-button > i {
-            font-size: 30px !important;
-        }
-
-        .like-reaction-button > span {
-            left: 17px;
-        }
-
-        .dislike-reaction-button {
-            padding: 10px;
-        }
-
-        .dislike-reaction-button > i {
-            font-size: 30px !important;
-        }
-
-        .dislike-reaction-button > i.press {
-            color:#e23b3b;
-            background-color: #ffffff;
-        }
-
-        .dislike-reaction-button > span {
-            left: 13px;
-        }
-
-        .fake-reaction-button {
-            padding: 10px;
-        }
-
-        .fake-reaction-button > i.press {
-            color:#e23b3b;
-            background-color: #ffffff;
-        }
-
-        .fake-reaction-button > span {
-            left: 31px;
-        }
-
-        .fake-reaction-button > i {
-            font-size: 30px !important;
-        }
-      </style>
-
-    <style>
-
-        .material-symbols-outlined {
-            opacity:0;
-            font-variation-settings:
-            'FILL' 1,
-            'wght' 1000,
-            'GRAD' 0,
-            'opsz' 48
-        }
-
-        .share-note {
-            width: 100%;
-            position: relative;
-            margin:0 auto;
-        }
-
-
-        .share-note > * {
-            position: absolute;
-            top: 10px;
-            right:10px;
-            color: white;
-        }
-
-        .share-note-message {
-            visibility: hidden;
-            display: grid;
-        }
-
-        .share-note-message > span {
-            color: black;
-        }
-
-        .share-note-message .progressbar-dot {
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .share-note > i:hover {
-            color: #262324;
-            cursor: pointer;
-        }
-
-    </style>
-
-    <style>
-        .loader {
-            text-align: center;
-            background-color: transparent;
-        }
-
-        .loader > span {
-            width: 48px;
-            height: 48px;
-            border: 5px solid black;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: loader-rotation 1s linear infinite;
-        }
-
-        @keyframes loader-rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        } 
-    </style>
-
-    <style>
-        .reactions-container-loader {
-            background-color: transparent;
-        }
-
-        .screen-center {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .notes-viewer {
-            padding: 45px;
-            background-color: white;
-            visibility: hidden;
-        }
-
-        @media screen and (max-width: 850px) {
-            .notes-viewer {
-                padding: 30px;
-            }
-        }
-
-        @media screen and (max-width: 750px) {
-            .notes-viewer {
-                padding: 20px;
-            }
-        }
-
-        @media screen and (max-width: 550px) {
-            .notes-viewer {
-                padding: 10px;
-            }
-        }
-
-        @media screen and (max-width: 500px) {
-            .notes-viewer {
-                padding: 5px;
-            }
-        }
-
-        body {
-            background-color: #f7348c;
-        }
-
-        .add-note-container {
-            position: relative;
-        }
-
-        .header {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0px;
-            grid-auto-rows: auto;
-            justify-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-            background-color: #f7348c;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .header-item {
-            display: grid;
-            border-radius: 5px;
-        }
-
-        .header-item:hover {
-            display: grid;
-            background-color:#f291b0;
-            cursor: pointer;
-        }
-
-
-        .header-item-home {
-            grid-column: 2;
-            grid-row: 1;
-            font-family: 'Courgette' !important;
-            font-size: 50px !important;
-            cursor: pointer;
-        }
-
-        .note-container-template {
-            display: none !important;
-        }
-
-        .footer {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0px;
-            grid-auto-rows: auto;
-            justify-items: center;
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .footer-item {
-            display: grid;
-            border-radius: 5px;
-        }
-
-        .footer-item:hover {
-            display: grid;
-            background-color:#f291b0;
-            cursor: pointer;
-        }
-
-        .footer-item-create-note {
-            font-size: 15px;
-            grid-column: 3;
-            grid-row: 1;
-        }
-
-    </style>
-
-    <style>
-
-        .pagination-container {
-            background-color: white;
-            display: block ruby;
-            margin-bottom: 10px;
-        }
-
-        .paginationjs {
-            display: grid !important;
-            justify-items: center !important;
-        }
-
-        .paginationjs-page > a, .paginationjs-prev > a, .paginationjs-next > a{
-            padding: 10px !important;
-            font-size: 20px !important;
-            height: 100%;
-            display: inline !important;
-            font-family: "Oswald" !important;
-        }
-
-        .paginationjs-prev.disabled {
-            display: none;
-        }
-
-        .paginationjs-next.disabled {
-            display: none;
-        }
-
-        .J-paginationjs-size-select {
-            font-size: 15px !important;
-            height: 100% !important;
-        }
-
-        .J-paginationjs-page.active > a {
-            background-color: #f291b0 !important;
-        }
-
-        .J-paginationjs-size-select {
-            font-family: "Oswald" !important;
-        }
-
-        .paginationjs-page {
-            margin-bottom: 10px;
-        }
-
-        .paginationjs-size-changer {
-            padding-top: 10px;
-        }
-
-
-    </style>
-
-<link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
-    <link rel="stylesheet" href="/resource/vendor/paginationJs/2.5.0/pagination.min.css " />   
-</head>
     <body>
 
         <div class="header">
@@ -520,23 +39,23 @@
             </div>
 
             <div id="notes_viewer" class="notes-viewer">
-                
+
                 <div class="note-container note-container-template">
                     <div class="note">
-                    
+
                         <div class="note-header text-center">
-                            <div class="share-note"> 
+                            <div class="share-note">
                                 <i class="material-symbols-outlined">
                                     share
                                 </i>
-                                    
+
                                 <div class="share-note-message">
-                                    <span >Copied !</span>
-                                    <span class="progressbar-dot" >.....</span>
+                                    <span>Copied !</span>
+                                    <span class="progressbar-dot">.....</span>
                                 </div>
                             </div>
                             <span class="note-title"> #xxxx </span>
-                            <br/>
+                            <br />
                             <span class="note-subtitle"> xxx/xxx/xxxx </span>
                         </div>
                         <div class="note-body text-center">
@@ -547,76 +66,67 @@
                         <div class="note-footer">
                             <span>#Pépite</span>
                         </div>
-            
+
                     </div>
-                
-                        
+
+
                     <div class="loader reactions-container-loader">
                         <span></span>
                     </div>
                     <div class="reactions-container" state="">
                         <div>
-                            <div
-                                class="reaction-button like-reaction-button"
-                                style="grid-column: 1; grid-row: 1;"
-                                reacted="false"
-                            >
+                            <div class="reaction-button like-reaction-button" style="grid-column: 1; grid-row: 1;"
+                                reacted="false">
                                 <span>Pépite!</span>
                                 <i class="material-symbols-outlined">
                                     favorite
                                 </i>
                                 <div class="reaction-counter">
-                                    <h class="reaction-counter-value">0</h> <br/>
-                                    <h class="reaction-counter-info">Pépite</h> 
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Pépite</h>
                                 </div>
                             </div>
                         </div>
-            
+
                         <div>
-                            <div
-                                class="reaction-button fake-reaction-button"
-                                style="grid-column: 2; grid-row: 1;"
-                                reacted="false"
-                            >   
+                            <div class="reaction-button fake-reaction-button" style="grid-column: 2; grid-row: 1;"
+                                reacted="false">
                                 <span>Fake</span>
                                 <i class="material-symbols-outlined">
                                     close
                                 </i>
                                 <div class="reaction-counter">
-                                    <h class="reaction-counter-value">0</h> <br/>
-                                    <h class="reaction-counter-info">Fake</h> 
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Fake</h>
                                 </div>
                             </div>
                         </div>
-            
-            
+
+
                         <div>
-                            <div
-                                class="reaction-button dislike-reaction-button"
-                                style="grid-column: 3; grid-row: 1;"
-                                reacted="false"
-                            >
+                            <div class="reaction-button dislike-reaction-button" style="grid-column: 3; grid-row: 1;"
+                                reacted="false">
                                 <span>Nulle</span>
                                 <i class="material-symbols-outlined">
                                     thumb_down
                                 </i>
                                 <div class="reaction-counter">
-                                    <h class="reaction-counter-value">0</h> <br/>
-                                    <h class="reaction-counter-info">Nulle</h> 
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Nulle</h>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="pagination-container">
-                
+
                 </div>
 
             </div>
 
-           
+
         </div>
 
         <div class="footer">
@@ -625,7 +135,7 @@
                 <i class="material-symbols-outlined" style="font-size: 30px !important;">
                     add_circle
                 </i>
-                <span>Ajouter <br/> une Pépite</span>
+                <span>Ajouter <br /> une Pépite</span>
             </div>
         </div>
 
@@ -635,177 +145,18 @@
     <script src="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.js"></script>
     <script src="/resource/vendor/paginationJs/2.5.0/pagination-edited.js"></script>
     <script src="/resource/vendor/hammerJs/2.0.8/hammer.min.js"></script>
+
+    <script src="/resource/js/helper.js"></script>
+    <script src="/resource/js/reaction.js"></script>
+    <script src="/resource/js/pagination.js"></script>
+    <script src="/resource/js/header.js"></script>
+    <script src="/resource/js/note.js"></script>
     
+
     <script>
 
-        $(window).on("load", () => {
-            $('.reactions-container-loader').css('display','none');
-            $('.material-symbols-outlined').css('opacity','1');
-            $('.reactions-container').css('opacity','1');
-        });
-
-        function setLoading(className, loading) {
-            $("." + className + "-loader").css("display", loading ? "" : "none");
-
-            if (className=="page") {
-                $(".notes-viewer").css("visibility", "visible");
-            }
-        }
-
-        function react(reactionElem, type) {
-
-            const reaction_container_elem = reactionElem.closest(".reactions-container");
-            if (reaction_container_elem.attr("state")=="loading") {
-                return ;
-            }
-
-            const noteId = reactionElem.closest(".note-container").attr("note_id");
-            const operation = (reactionElem.attr("reacted") == "false") ? "add": "remove";
-
-            const data = {
-                "operation": operation,
-            };
-
-            setLoading("reactions-container", true);
-            reaction_container_elem.attr("state", "loading");
-
-            $.post(`/api/note/${noteId}/reaction/${type}`, {data: JSON.stringify(data)}, (response_data) => {
-                
-                setLoading("reactions-container", false);
-                reaction_container_elem.attr("state", "");
-
-                if (response_data["error"]===true) {
-                    console.error(response_data);
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'An error occurred',
-                        text: response_data["error_msg"],
-                    });
-                } else {
-                    reactionElem.find("i").toggleClass("press", 1000);
-                    reactionElem.find("span").toggleClass("press", 1000);
-
-                    var counterElem = reactionElem.find('.reaction-counter-value');
-                    if (operation=="add") {
-                        counterElem.text(parseInt(counterElem.text()) + 1);
-                    }else {
-                        counterElem.text(parseInt(counterElem.text()) - 1);
-                    }
-
-                    reactionElem.attr("reacted", (reactionElem.attr("reacted") == "false") ? "true": "false");
-                }
-
-            }).fail(function(xhr, status, error){
-                console.error(xhr, status, error);
- 
-                setLoading("reactions-container", false);
-                reaction_container_elem.attr("state", "");
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'An error occurred',
-                    html: xhr.responseText,
-                });
-            });
-            
-        }
-
-        function setUrlArg(url, name, value) {
-            if (value===null) {
-                url.searchParams.delete(name);
-                return ;
-            }
-
-            url.searchParams.set(name, value);
-        }
-
-        function clearPaginationUrl(url, clearPageSize=false) {
-
-            setUrlArg(url, "pageNumber", null);
-            setUrlArg(url, "paginationStart", null);
-
-            if (clearPageSize) {
-                setUrlArg("pageSize", null);
-            }
-        }
-
-        function initEvents() {
-            $(".like-reaction-button").on("click", (event) => {
-                react($(event.currentTarget), "like");
-            });
-
-            $(".dislike-reaction-button").on("click", (event) => {
-                react($(event.currentTarget), "dislike");
-            });
-
-            $(".fake-reaction-button").on("click", (event) => {
-                react($(event.currentTarget), "fake");
-            });
-
-            $(".share-note, .share-note > *").on('click', (event) => {
-
-                const noteContainer = $(event.currentTarget).closest(".note-container");
-
-                if (noteContainer.find(".share-note").attr("state")=="clicked") {
-                    return ;
-                }
-                noteContainer.find(".share-note").attr("state", "clicked");
-
-                const note_id = noteContainer.attr("note_id");
-                navigator.clipboard.writeText(`${window.location.protocol}//${window.location.host}/note/${note_id}`)
-
-
-                noteContainer.find(".share-note > i").css("visibility", "hidden");
-                noteContainer.find(".share-note-message").css("visibility", "visible");
-
-                let count = 0;
-                const number_step = 3;
-                const total_time = 600;
-                const timer_step = Math.round(total_time/number_step);
-
-                const progressbar = noteContainer.find(".share-note-message .progressbar-dot");
-                progressbar.text(".".repeat(number_step));
-
-                const shareAnimation = () => {
-                    if (count < number_step) {
-                        
-                        progressbar.text(progressbar.text().slice(0, -1));
-
-                        count += 1;
-
-                        setTimeout(shareAnimation, timer_step);
-
-                    } else {
-                        noteContainer.find(".share-note > i").css("visibility", "visible");
-                        noteContainer.find(".share-note-message").css("visibility", "hidden");
-
-                        noteContainer.find(".share-note").attr("state", "");
-                    }
-                }
-
-                setTimeout(shareAnimation, timer_step);
-            });
-        }
-
-        function setNote(noteElem, noteData) {
-
-            noteElem.attr("note_id", noteData["id"]);
-
-            noteElem.find(".note-title").text("#" + noteData["id"]);
-            noteElem.find(".note-subtitle").text(noteData["date"]);
-
-            noteElem.find(".note-content-header").html(noteData["content"]["header"]);
-            noteElem.find(".note-content-body").html(noteData["content"]["body"]);
-            noteElem.find(".note-content-footer").html(noteData["content"]["footer"]);
-            
-            noteElem.find(".like-reaction-button .reaction-counter-value").text(noteData["reactions"]["like"]);
-            noteElem.find(".dislike-reaction-button .reaction-counter-value").text(noteData["reactions"]["dislike"]);
-            noteElem.find(".fake-reaction-button .reaction-counter-value").text(noteData["reactions"]["fake"]);
-
-        }
-
-        function loadPage(callback=null, pageNumber=null, pageSize=null, paginationStart=null) {
+        
+        function loadPage(callback = null, pageNumber = null, pageSize = null, paginationStart = null) {
             var data = {
                 "pageSize": pageSize,
                 "pageNumber": pageNumber,
@@ -813,10 +164,10 @@
             };
 
             $.get('/api/note', data, (response_data) => {
-                
+
                 setLoading("page", false);
 
-                if (response_data["error"]===true) {
+                if (response_data["error"] === true) {
                     console.error(response_data);
 
                     Swal.fire({
@@ -833,15 +184,15 @@
                         newNote.removeClass("note-container-template");
                         newNote.insertBefore(".notes-viewer .pagination-container");
                     });
-                    
+
                     if (callback) {
                         callback(response_data["data"]);
                     }
                 }
 
-            }).fail(function(xhr, status, error){
+            }).fail(function (xhr, status, error) {
                 console.error(xhr, status, error);
- 
+
                 setLoading("page", false);
                 Swal.fire({
                     icon: 'error',
@@ -856,11 +207,11 @@
 
             var url = new URL(window.location);
             window.pageNumber = url.searchParams.get("pageNumber", null);
-            window.paginationStart = (pageNumber===1 || pageNumber==null) ? null : url.searchParams.get("paginationStart", null);
+            window.paginationStart = (pageNumber === 1 || pageNumber == null) ? null : url.searchParams.get("paginationStart", null);
             window.pageSize = url.searchParams.get("pageSize", null);
             window.isPaginationInit = false;
 
-            if ((pageNumber==null || pageNumber==1) && url.searchParams.get("paginationStart", null)!=null) {
+            if ((pageNumber == null || pageNumber == 1) && url.searchParams.get("paginationStart", null) != null) {
                 var newUrl = new URL(window.location);
                 setUrlArg(newUrl, "paginationStart", null);
                 setUrlArg(newUrl, "pageNumber", null);
@@ -869,17 +220,17 @@
                 window.pageNumber = null;
                 window.paginationStart = null;
 
-                window.history.pushState({path: newUrl},'',newUrl);
+                window.history.pushState({ path: newUrl }, '', newUrl);
             }
 
-            if (window.paginationStart==-1) {
+            if (window.paginationStart == -1) {
                 window.paginationStart = null;
             }
 
             let paginationElem = null;
 
             loadPage((data) => {
-                initEvents();
+                initNoteEvents();
 
                 var newUrl = new URL(window.location);
 
@@ -888,16 +239,16 @@
 
                 newUrl = newUrl.toString();
 
-                window.history.pushState({path: newUrl},'',newUrl);
+                window.history.pushState({ path: newUrl }, '', newUrl);
 
 
-                paginationElem = $(".pagination-container").pagination({
+                $(".pagination-container").pagination({
                     dataSource: data["total_item_count"],
                     pageSize: data["page_size"],
                     pageNumber: data["page_number"],
                     showSizeChanger: true,
                     sizeChangerOptions: [5, 10, 15, 20, 50, 100],
-                    pageRange:1,
+                    pageRange: 1,
                     afterSizeSelectorChange: (event, pageSize) => {
 
                         var url = new URL(window.location);
@@ -911,14 +262,14 @@
                             return;
 
                         var url = new URL(window.location);
-                        setUrlArg(url, "pageNumber", (pageNumber==1) ? null : pageNumber);
+                        setUrlArg(url, "pageNumber", (pageNumber == 1) ? null : pageNumber);
 
-                        if (pageNumber>1) {
-                            setUrlArg(url, "paginationStart", (window.paginationStart==null) ? data["pagination_start"] : window.paginationStart);
+                        if (pageNumber > 1) {
+                            setUrlArg(url, "paginationStart", (window.paginationStart == null) ? data["pagination_start"] : window.paginationStart);
                         } else {
                             setUrlArg(url, "paginationStart", null);
                         }
-                        
+
                         window.location = url;
                     },
                     afterInit: () => {
@@ -927,10 +278,10 @@
                         const touchArea = document.getElementById("notes_viewer");
                         var hammertime = new Hammer(touchArea, {});
 
-                        hammertime.on('swipeleft', function(ev) {
+                        hammertime.on('swipeleft', function (ev) {
                             var paginationElem = $(".pagination-container");
 
-                            if (paginationElem.pagination('getCurrentPageNum')==paginationElem.pagination('getTotalPage')) {
+                            if (paginationElem.pagination('getCurrentPageNum') == paginationElem.pagination('getTotalPage')) {
                                 Swal.fire({
                                     text: "Congratulation ! You've reached the end of the nuggets wall",
                                 });
@@ -938,10 +289,10 @@
                             paginationElem.pagination('next');
                         });
 
-                        hammertime.on('swiperight', function(ev) {
+                        hammertime.on('swiperight', function (ev) {
                             var paginationElem = $(".pagination-container");
 
-                            if (paginationElem.pagination('getCurrentPageNum')==1) {
+                            if (paginationElem.pagination('getCurrentPageNum') == 1) {
                                 // Swal.fire({
                                 //     text: "No more nugget to read at the moment...but you can go check out the previous ones !",
                                 // });
@@ -958,23 +309,12 @@
 
             }, window.pageNumber, window.pageSize, window.paginationStart);
 
-            $("#button_home").on('click', () => {
-                window.location = "/";
-            });
-
             $("#create_note, #create_note > *").on('click', () => {
                 window.location = "/note/create";
             });
-            // Swal.fire({
-            //     text: 'Copied to clipboard',
-            //     position: "top-end",
-            //     toast: true,
-            //     timer: 1000,
-            //     allowEscape: true,
-            //     timerProgressBar: true,
-            // })
 
         });
 
     </script>
-  </html>
+
+</html>

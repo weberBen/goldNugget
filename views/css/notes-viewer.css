@@ -1,0 +1,29 @@
+.notes-viewer {
+    padding: 45px;
+    background-color: white;
+    visibility: hidden;
+}
+
+@media screen and (max-width: 850px) {
+    .notes-viewer {
+        padding: 30px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .notes-viewer {
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .notes-viewer {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .notes-viewer {
+        padding: 5px;
+    }
+}

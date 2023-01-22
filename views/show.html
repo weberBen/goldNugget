@@ -1,0 +1,282 @@
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <link rel="icon" type="image/x-icon" href="/resource/assets/icon/favicon.ico">
+        <title>Le mur à pépite</title>
+
+        <link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
+        <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
+        <link rel="stylesheet" href="/resource/css/helper.css" />
+        <link rel="stylesheet" href="/resource/css/header.css" />
+        <link rel="stylesheet" href="/resource/css/footer.css" />
+        <link rel="stylesheet" href="/resource/css/reaction.css" />
+        <link rel="stylesheet" href="/resource/css/nugget.css" />
+        <link rel="stylesheet" href="/resource/css/nugget-reaction.css" />
+        <link rel="stylesheet" href="/resource/css/notes-viewer.css" />
+        <link rel="stylesheet" href="/resource/css/main-theme.css" />
+            
+
+        <style>
+
+            .see-more-container {
+                padding-top: 55px;
+                padding-bottom: 65px;
+            }
+
+            .see-more-btn {
+                min-width: 200px;
+                min-height: 60px;
+                font-family: 'Nunito', sans-serif;
+                font-size: 22px;
+                text-transform: uppercase;
+                letter-spacing: 1.3px;
+                font-weight: 700;
+                color: #313133;
+                background: #f291b0;
+                background: linear-gradient(#f7348c 0%, #f291b0 100%);
+                border: none;
+                border-radius: 1000px;
+                box-shadow: 12px 12px 24px #ff719e;
+                transition: all 0.3s ease-in-out 0s;
+                cursor: pointer;
+                outline: none;
+                position: relative;
+                padding: 10px;
+            }
+
+            .see-more-btn::before {
+            content: '';
+                border-radius: 1000px;
+                min-width: calc(188px + 12px);
+                min-height: calc(49px + 12px);
+                border: 6px solid ;
+                box-shadow: 0 0 60px #f291b0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: all .3s ease-in-out 0s;
+            }
+
+            .see-more-btn:hover, .button:focus {
+                color: #313133;
+                transform: translateY(-6px);
+            }
+
+            .see-more-btn:hover::before, button:focus::before {
+                opacity: 1;
+            }
+
+            .see-more-btn::after {
+                content: '';
+                width: 30px; height: 30px;
+                border-radius: 100%;
+                border: 6px solid #f7348c;
+                position: absolute;
+                
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                animation: see-more-btn-ring 1.5s infinite;
+            }
+
+            .see-more-btn:hover::after, button:focus::after {
+                animation: none;
+                display: none;
+            }
+
+            @keyframes see-more-btn-ring {
+                0% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                }
+                100% {
+                width: 300px;
+                height: 200px;
+                opacity: 0;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="header">
+            <div id="button_home" class="header-item-home">
+                <span>#Pépites</span>
+            </div>
+        </div>
+
+        <div class="screen-center">
+            <div class="loader page-loader">
+                <span></span>
+            </div>
+
+            <div id="notes_viewer" class="notes-viewer">
+
+                <div class="note-container">
+                    <div class="note">
+
+                        <div class="share-note">
+                            <i class="material-symbols-outlined">
+                                share
+                            </i>
+
+                            <div class="share-note-message">
+                                <span>Copied !</span>
+                                <span class="progressbar-dot">.....</span>
+                            </div>
+                        </div>
+
+                        <div class="note-header text-center">
+                            <span class="note-title"> #xxxx </span>
+                            <br />
+                            <span class="note-subtitle"> xxx/xxx/xxxx </span>
+                        </div>
+                        <div class="note-body text-center">
+                            <span class="note-content note-content-header"></span>
+                            <span class="note-content note-content-body"></span>
+                            <span class="note-content note-content-footer"></span>
+                        </div>
+                        <div class="note-footer">
+                            <span>#Pépite</span>
+                        </div>
+
+                    </div>
+
+                    <div class="loader reactions-container-loader">
+                        <span></span>
+                    </div>
+                    <div class="reactions-container" state="">
+                        <div>
+                            <div class="reaction-button like-reaction-button" style="grid-column: 1; grid-row: 1;"
+                                reacted="false">
+                                <span>Pépite!</span>
+                                <i class="material-symbols-outlined">
+                                    favorite
+                                </i>
+                                <div class="reaction-counter">
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Pépite</h>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="reaction-button fake-reaction-button" style="grid-column: 2; grid-row: 1;"
+                                reacted="false">
+                                <span>Fake</span>
+                                <i class="material-symbols-outlined">
+                                    close
+                                </i>
+                                <div class="reaction-counter">
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Fake</h>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div class="reaction-button dislike-reaction-button" style="grid-column: 3; grid-row: 1;"
+                                reacted="false">
+                                <span>Nulle</span>
+                                <i class="material-symbols-outlined">
+                                    thumb_down
+                                </i>
+                                <div class="reaction-counter">
+                                    <h class="reaction-counter-value">0</h> <br />
+                                    <h class="reaction-counter-info">Nulle</h>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="see-more-container">
+                    <button id="see_more_btn" class="see-more-btn">See more !</button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="footer">
+
+            <div class="footer-item">
+                
+            </div>
+        </div>
+
+    </body>
+
+    <script src="/resource/vendor/jquery/3.6.3/jquery.min.js"></script>
+    <script src="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.js"></script>
+
+    <script src="/resource/js/helper.js"></script>
+    <script src="/resource/js/reaction.js"></script>
+    <script src="/resource/js/header.js"></script>
+    <script src="/resource/js/note.js"></script>
+
+    <script>
+
+        function loadNote(note_id, callback = null) {
+            
+            $.get(`/api/note/${note_id}`, {}, (response_data) => {
+
+                setLoading("page", false);
+
+                if (response_data["error"] === true) {
+                    console.error(response_data);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred',
+                        text: response_data["error_msg"],
+                    });
+                } else {
+
+                    setNote($(".note-container"), response_data["data"]["note"]);
+
+                    if (callback) {
+                        callback(response_data["data"]);
+                    }
+                }
+
+            }).fail(function (xhr, status, error) {
+                console.error(xhr, status, error);
+
+                setLoading("page", false);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred',
+                    html: xhr.responseText,
+                });
+            });
+        }
+
+
+        $(document).ready(() => {
+
+            const note_id = parseInt(getRouteParameter(-1))
+
+            loadNote(note_id, (data) => {
+                
+                initNoteEvents();
+            });
+
+            $("#see_more_btn").on('click', () => {
+                window.location = "/";
+            });
+
+        });
+
+    </script>
+
+</html>

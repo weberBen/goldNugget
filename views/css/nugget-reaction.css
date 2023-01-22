@@ -1,0 +1,69 @@
+.reactions-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+    height: 70px;
+    padding-top: 15px;
+    padding-bottom: 50px;
+    opacity: 0;
+    border-top: solid white 0.5em;
+    background: linear-gradient(#f7348c, #f291b0);
+}
+
+.like-reaction-button {
+    padding: 10px;
+}
+
+.like-reaction-button > i.press {
+    color:#e23b3b;
+    background-color: #ffffff;
+}
+
+.like-reaction-button > i {
+    font-size: 30px !important;
+}
+
+.like-reaction-button > span {
+    left: 17px;
+}
+
+.dislike-reaction-button {
+    padding: 10px;
+}
+
+.dislike-reaction-button > i {
+    font-size: 30px !important;
+}
+
+.dislike-reaction-button > i.press {
+    color:#e23b3b;
+    background-color: #ffffff;
+}
+
+.dislike-reaction-button > span {
+    left: 13px;
+}
+
+.fake-reaction-button {
+    padding: 10px;
+}
+
+.fake-reaction-button > i.press {
+    color:#e23b3b;
+    background-color: #ffffff;
+}
+
+.fake-reaction-button > span {
+    left: 31px;
+}
+
+.fake-reaction-button > i {
+    font-size: 30px !important;
+}
+
+
+
+.reactions-container-loader {
+    background-color: transparent;
+}

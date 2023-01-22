@@ -5,101 +5,19 @@
       <link rel="icon" type="image/x-icon" href="/resource/assets/icon/favicon.ico">
       <title>Le mur à pépite</title>
   
-      <style>
-          @font-face {
-              font-family: "Oswald";
-              src: url("/resource/fonts/Oswald/Oswald-VariableFont_wght.ttf");
-          }
-          @font-face {
-              font-family: "Courgette";
-              src: url("/resource/fonts/Courgette/Courgette-Regular.ttf");
-          }
-      </style>
+
+    <link rel="stylesheet" href="/resource/vendor/flatpickr/4.6.13/flatpickr.min.css" />
+    <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
 
     <link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
-    <link rel="stylesheet" href="/resource/vendor/flatpickr/4.6.13/flatpickr.min.css" />
-      <style>
-        .note-container {
-            text-align: center;
-            min-width: 275px;
-            max-width: 600px;
-            margin: 10px;
-        }
-        .note {
-            font-family: 'Oswald';
-            background-color: #f7348c;
-            padding: 10px;
-        }
-        .note-header {
-            padding-bottom: 30px;
-        }
-
-        .note-content {
-            word-wrap: break-word;      /* IE 5.5-7 */
-            white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
-            white-space: pre-wrap;      /* current browsers */
-            font-size: 35px;
-            text-align: center;
-        }
-
-        .note-title {
-            text-align: center;
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        .note-body-header {
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        .note-content-body {
-            font-size: 38px;
-            font-weight: bold;
-            padding-top: 15px;
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        .note-body {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 0px;
-            grid-auto-rows: auto;
-        }
-
-        .note-body-footer {
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        .note-subtitle {
-            text-align: center;
-            font-size: 15px;
-        }
-
-        .note-footer {
-            padding-top: 30px;
-            font-size: 25px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-      </style>
+    <link rel="stylesheet" href="/resource/css/helper.css" />
+    <link rel="stylesheet" href="/resource/css/header.css" />
+    <link rel="stylesheet" href="/resource/css/footer.css" />
+    <link rel="stylesheet" href="/resource/css/nugget.css" />
+    <link rel="stylesheet" href="/resource/css/main-theme.css" />
 
 
     <style>
-        .screen-center {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
         .note-input-group {
             display: grid;
             width: 100%;
@@ -147,67 +65,41 @@
     </style>
 
     <style>
-    .btn {
-        background-color: white;
-        border-radius: 8px;
-        border-style: none;
-        box-sizing: border-box;
-        font-weight: bold;
-        color: #f7348c;
-        cursor: pointer;
-        display: inline-block;
-        font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        height: 40px;
-        line-height: 20px;
-        list-style: none;
-        margin: 0;
-        outline: none;
-        padding: 10px 16px;
-        position: relative;
-        text-align: center;
-        text-decoration: none;
-        transition: color 100ms;
-        vertical-align: baseline;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        margin: 5px;
-    }
-
-    .btn:hover, .btn:focus {
-        background-color: #F082AC;
-        color: white;
-    }
-
-    </style>
-
-    <style>
-        .loader {
-            text-align: center;
-            background-color: transparent;
-        }
-
-        .loader > span {
-            width: 48px;
-            height: 48px;
-            border: 5px solid black;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
+        .btn {
+            background-color: white;
+            border-radius: 8px;
+            border-style: none;
             box-sizing: border-box;
-            animation: loader-rotation 1s linear infinite;
+            font-weight: bold;
+            color: #f7348c;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            height: 40px;
+            line-height: 20px;
+            list-style: none;
+            margin: 0;
+            outline: none;
+            padding: 10px 16px;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: color 100ms;
+            vertical-align: baseline;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            margin: 5px;
         }
 
-        @keyframes loader-rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        } 
+        .btn:hover, .btn:focus {
+            background-color: #F082AC;
+            color: white;
+        }
+
     </style>
+
 
     <style>
         .input-field {
@@ -232,53 +124,14 @@
     </style>
 
     <style>
-        .header {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0px;
-            grid-auto-rows: auto;
-            justify-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-            background-color: #f7348c;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .header-item {
-            display: grid;
-            border-radius: 5px;
-        }
-
-        .header-item:hover {
-            display: grid;
-            background-color:#f291b0;
-            cursor: pointer;
-        }
-
-
-        .header-item-home {
-            grid-column: 2;
-            grid-row: 1;
-            font-family: 'Courgette' !important;
-            font-size: 50px !important;
-            cursor: pointer;
-        }
-    </style>
-
-    <style>
         .preview {
             background-color: white;
             padding: 10px;
             margin-top: 30px;
         }
 
-        body {
-            background-color: #f7348c;
-        }
     </style>
-    
-    <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
+
     
 </head>
 
@@ -354,6 +207,9 @@
     <script src="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.js"></script>
     <script src="/resource/vendor/flatpickr/4.6.13/flatpickr.min.js"></script>
     <script src="/resource/vendor/flatpickr/4.6.13/l10n/fr.js"></script>
+
+    <script src="/resource/js/helper.js"></script>
+    <script src="/resource/js/header.js"></script>
     
     <script>
 
@@ -413,11 +269,6 @@
         }
 
         $(document).ready(() => {
-
-            $("#button_home").on('click', () => {
-                console.log("enter");
-                window.location = "/";
-            });
 
             $(".datepicker").flatpickr({
                 dateFormat:"d/m/Y",

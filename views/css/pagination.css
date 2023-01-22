@@ -1,0 +1,47 @@
+.pagination-container {
+    background-color: white;
+    display: block ruby;
+    margin-bottom: 10px;
+}
+
+.paginationjs {
+    display: grid !important;
+    justify-items: center !important;
+}
+
+.paginationjs-page > a, .paginationjs-prev > a, .paginationjs-next > a{
+    padding: 10px !important;
+    font-size: 20px !important;
+    height: 100%;
+    display: inline !important;
+    font-family: "Oswald" !important;
+}
+
+.paginationjs-prev.disabled {
+    display: none;
+}
+
+.paginationjs-next.disabled {
+    display: none;
+}
+
+.J-paginationjs-size-select {
+    font-size: 15px !important;
+    height: 100% !important;
+}
+
+.J-paginationjs-page.active > a {
+    background-color: #f291b0 !important;
+}
+
+.J-paginationjs-size-select {
+    font-family: "Oswald" !important;
+}
+
+.paginationjs-page {
+    margin-bottom: 10px;
+}
+
+.paginationjs-size-changer {
+    padding-top: 10px;
+}

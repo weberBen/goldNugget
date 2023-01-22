@@ -1,0 +1,124 @@
+.reaction-button {
+    height:100px;
+    margin:0 auto;
+    position: relative;
+}
+
+.reaction-button > i {
+    cursor:pointer;
+    padding:10px 12px 8px;
+    background:#f7348c;
+    border-radius:50%;
+    display:inline-block;
+    margin:0 0 15px;
+    color: white;
+    transition:.2s;
+}
+
+.reaction-button > i:hover {
+    color:#f7348c;
+    background:#ffffff;
+}
+
+.reaction-button > i:before {
+    font-style:normal;
+}
+
+.reaction-button > span {
+    position: absolute;
+    bottom:70px;
+    left: 0;
+    right:0;
+    visibility: hidden;
+    transition:.6s;
+    z-index:-2;
+    font-size:2px;
+    color:transparent;
+    font-weight:400;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.reaction-button > i.press {
+    animation: reaction-button-size .4s;
+    color: green;
+}
+
+.reaction-button > span.press {
+    bottom:120px;
+    font-size:14px;
+    visibility:visible;
+    animation: reaction-button-fade 1s;
+    display: inline-table;
+}
+
+@keyframes reaction-button-fade {
+    0% {
+        color: transparent;
+        z-index: 1000;
+    }
+    50% {
+        color:white;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    100% {color: transparent;}
+}
+
+@keyframes reaction-button-size {
+    0% {padding:10px 12px 8px;}
+    50% {padding:14px 16px 12px;  
+        margin-top:-4px;}
+    100% {padding:10px 12px 8px;}
+}
+
+.reaction-counter {
+    text-align: center;
+}
+
+.reaction-counter-value {
+    color: #262324;
+    font-weight: bold;
+}
+
+.reaction-counter-info {
+    color: #262324;
+    font-style: italic;
+}
+
+
+
+
+.share-note {
+    width: 100%;
+    position: relative;
+    margin:0 auto;
+}
+
+
+.share-note > * {
+    position: absolute;
+    top: 10px;
+    right:10px;
+    color: white;
+}
+
+.share-note-message {
+    visibility: hidden;
+    display: grid;
+}
+
+.share-note-message > span {
+    color: black;
+}
+
+.share-note-message .progressbar-dot {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.share-note > i:hover {
+    color: #262324;
+    cursor: pointer;
+}

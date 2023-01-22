@@ -1,0 +1,32 @@
+.footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0px;
+    grid-auto-rows: auto;
+    justify-items: center;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-item {
+    display: grid;
+    border-radius: 5px;
+}
+
+.footer-item:hover {
+    display: grid;
+    background-color:#f291b0;
+    cursor: pointer;
+}
+
+.footer-item-create-note {
+    font-size: 15px;
+    grid-column: 3;
+    grid-row: 1;
+}
+
+
+.add-note-container {
+    position: relative;
+}

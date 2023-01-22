@@ -14,9 +14,9 @@ import traceback
 DATABASE = "database.db"
 DEFAULT_PAGE_SIZE = 10
 
-DEBUG = True
-RAISE_EXCEPTION = True
-DISPLAY_TRACE = True
+DEBUG = False
+RAISE_EXCEPTION = False
+DISPLAY_TRACE = False
 API_KEY_VALIDATION_THROTTLE_TIME_S = 5
 
 app = Flask(__name__)
@@ -71,8 +71,12 @@ def handle_exception(e):
     }
 
 def get_post_data(request):
-    data = request.json
-    if data is None:
+    data = None
+
+    if request.headers['Content-Type'].startswith('application/json'):
+        data = request.json
+    
+    elif request.headers['Content-Type'].startswith('application/x-www-form-urlencoded'):
         data = request.form
         if (data is not None) and ("data" in data):
             data = json.loads(data["data"])
@@ -183,13 +187,49 @@ def api_note_index():
 
     return response
 
-@app.route('/note/<int:note_id>', methods=["GET"]) 
+@app.route('/nugget/<int:note_id>', methods=["GET"]) 
 def note_show(note_id):
-    return "note_id=" + str(note_id)
+    return send_from_directory("views/", "show.html")
 
 @app.route('/api/note/<int:note_id>', methods=["GET"]) 
 def api_note_show(note_id):
-    return "API note_id=" + str(note_id)
+    record = None
+    cur = None
+    db = get_db()
+    try:
+
+        query = """SELECT id, DATE(note_date), note_content, note_like_reactions,
+            note_dislike_reactions, note_fake_reactions
+            FROM notes
+            WHERE id = ?
+        """
+        cur = db.execute(query, (note_id, ))
+        rows = cur.fetchall()
+
+        if len(rows)>0:
+            row = rows[0]
+            record = {
+                "id": row[0],
+                "date": datetime.strptime(row[1], "%Y-%m-%d").strftime("%d/%m/%Y"),
+                "content": json.loads(row[2]),
+                "reactions": {
+                    "like": row[3],
+                    "dislike": row[4],
+                    "fake": row[5],
+                }
+            }
+    finally:
+        if cur is not None:
+            cur.close()
+    
+    if record is None:
+        raise UserException(f'Invalid nugget id({note_id})')
+    
+    return {
+        "data": {
+            "note": record,
+        }
+    }
     
 
 @app.route('/api/note/create', methods=["POST"]) 

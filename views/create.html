@@ -1,0 +1,509 @@
+
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width">
+      <link rel="icon" type="image/x-icon" href="/resource/assets/icon/favicon.ico">
+      <title>Le mur à pépite</title>
+  
+      <style>
+          @font-face {
+              font-family: "Oswald";
+              src: url("/resource/fonts/Oswald/Oswald-VariableFont_wght.ttf");
+          }
+          @font-face {
+              font-family: "Courgette";
+              src: url("/resource/fonts/Courgette/Courgette-Regular.ttf");
+          }
+      </style>
+
+    <link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
+    <link rel="stylesheet" href="/resource/vendor/flatpickr/4.6.13/flatpickr.min.css" />
+      <style>
+        .note-container {
+            text-align: center;
+            min-width: 275px;
+            max-width: 600px;
+            margin: 10px;
+        }
+        .note {
+            font-family: 'Oswald';
+            background-color: #f7348c;
+            padding: 10px;
+        }
+        .note-header {
+            padding-bottom: 30px;
+        }
+
+        .note-content {
+            word-wrap: break-word;      /* IE 5.5-7 */
+            white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+            white-space: pre-wrap;      /* current browsers */
+            font-size: 35px;
+            text-align: center;
+        }
+
+        .note-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .note-body-header {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .note-content-body {
+            font-size: 38px;
+            font-weight: bold;
+            padding-top: 15px;
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .note-body {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 0px;
+            grid-auto-rows: auto;
+        }
+
+        .note-body-footer {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .note-subtitle {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .note-footer {
+            padding-top: 30px;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+      </style>
+
+
+    <style>
+        .screen-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .note-input-group {
+            display: grid;
+            width: 100%;
+            font-family: 'Oswald';
+            font-size: 20px;
+            max-width: 600px;
+        }
+
+        .note-input {
+            background-color: #f291b0;
+            border: none;
+            margin-top: 10px;
+        }
+        
+
+        .code {
+            /* background-color: #f2f1f1; */
+            background-color: #f291b0;
+            font-style: italic;
+        }
+
+        .info-container {
+            padding-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .info-content {
+           display: grid;
+           /* border: solid #2ac6eb; */
+           border: solid white;
+           border-radius: 10px;
+        }
+
+        .info-title {
+            /* color: #2ac6eb; */
+            color: white;
+            font-weight: bold;
+        }
+
+        .info-content-item {
+           padding-bottom: 20px;
+        }
+        
+
+    </style>
+
+    <style>
+    .btn {
+        background-color: white;
+        border-radius: 8px;
+        border-style: none;
+        box-sizing: border-box;
+        font-weight: bold;
+        color: #f7348c;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        height: 40px;
+        line-height: 20px;
+        list-style: none;
+        margin: 0;
+        outline: none;
+        padding: 10px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        transition: color 100ms;
+        vertical-align: baseline;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        margin: 5px;
+    }
+
+    .btn:hover, .btn:focus {
+        background-color: #F082AC;
+        color: white;
+    }
+
+    </style>
+
+    <style>
+        .loader {
+            text-align: center;
+            background-color: transparent;
+        }
+
+        .loader > span {
+            width: 48px;
+            height: 48px;
+            border: 5px solid black;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: loader-rotation 1s linear infinite;
+        }
+
+        @keyframes loader-rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        } 
+    </style>
+
+    <style>
+        .input-field {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0px;
+            grid-auto-rows: auto;
+            padding-bottom: 10px;
+        }
+
+        .input-field-info {
+            font-size: 15px;
+            padding-right: 20px;
+            grid-column: 1/2;
+            grid-row: 1;
+        }
+
+        .input-field-value {
+            grid-column: 2/7;
+            grid-row: 1;
+        }
+    </style>
+
+    <style>
+        .header {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0px;
+            grid-auto-rows: auto;
+            justify-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #f7348c;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .header-item {
+            display: grid;
+            border-radius: 5px;
+        }
+
+        .header-item:hover {
+            display: grid;
+            background-color:#f291b0;
+            cursor: pointer;
+        }
+
+
+        .header-item-home {
+            grid-column: 2;
+            grid-row: 1;
+            font-family: 'Courgette' !important;
+            font-size: 50px !important;
+            cursor: pointer;
+        }
+    </style>
+
+    <style>
+        .preview {
+            background-color: white;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        body {
+            background-color: #f7348c;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
+    
+</head>
+
+    <body>
+
+        <div class="header">
+            <div id="button_home" class="header-item-home">
+                <span>#Pépites</span>
+            </div>
+        </div>
+            
+
+            <div class="screen-center">
+                
+
+                <div class="info-container">
+                    <span class="info-title"> Info </span>
+                    <div class="info-content">
+                        <span class="info-content-item"> Use <span class="code"> {fi} </span> with i=1,2,...,6 to automatically replace it with a female name (i.e <span class="code">{f1}</span> will be replaced by <span class="code">Alice</span>) </span>
+                        <span class="info-content-item"> Use <span class="code"> {mi} </span> with i=1,2,...,6 to automatically replace it with a male name (i.e <span class="code">{m1}</span> will be replaced by <span class="code">Bob</span>) </span>
+                    </div>
+                </div>
+
+                <div class="note-input-group">
+                    <div class="input-field">
+                        <span class="input-field-info">API key</span>
+                        <input type="password" class="note-input input-field-value api-key" placeholder="API key"/>
+                    </div>
+                    <input class="note-input datepicker" />
+                    <textarea class="note-input note-content-header-input" rows="6"></textarea>
+                    <textarea class="note-input note-content-body-input" rows="2"></textarea>
+                    <textarea class="note-input note-content-footer-input" rows="3"></textarea>
+                </div>
+                
+
+                <div class="preview">
+                    <div class="note-container">
+                        <div class="note">
+                            <div class="note-header text-center">
+                                <span class="note-title"> #XXXX </span>
+                                <br/>
+                                <span class="note-subtitle"> xx/xx/xxxx </span>
+                            </div>
+                            <div class="note-body text-center">
+                                <span class="note-content note-content-header"></span>
+                                <span class="note-content note-content-body"></span>
+                                <span class="note-content note-content-footer"></span>
+                            </div>
+                            <div class="note-footer">
+                                <span>#Pépite</span>
+                            </div>
+                
+                        </div>
+                    
+                    </div>
+                </div>
+
+                <div style="display: grid;">
+                    <button id="save" class="btn" role="button">Save</button>
+                    <div style="visibility: hidden; padding: 10px" id="loader_saving" class="loader reactions-container-loader">
+                        <span></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </body>
+    <script src="/resource/vendor/jquery/3.6.3/jquery.min.js"></script>
+    <script src="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.js"></script>
+    <script src="/resource/vendor/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script src="/resource/vendor/flatpickr/4.6.13/l10n/fr.js"></script>
+    
+    <script>
+
+        const note_example = {
+            "header": "J'étais en train de réfléchir en mettant mon doigt devant ma bouche, ce qui sans m'en rendre compte me faisait faire la moustache d'Hitler et avec les sourcils froncés..combo\nMa collègue le remarque et me sors",
+            "body": "Avec deux doigts c'est mieux",
+            "footer": "Elle aurait pu m'offrir un verre avant tout de même..." ,
+        };
+
+
+        function anonymise(text) {
+            const female_names = ["Alice", "Julie", "Jade", "Emma", "Juliette", "Anna"];
+            const male_names =  ["Bob", "Arthur", "Jules", "Louis", "Léo", "Joé"];
+            
+            let re = new RegExp("{f[0-9]+}");
+            while (match=re.exec(text)) {
+                index = parseInt(match[0].slice(2, -1));
+                text = text.replace(match, female_names[index]);
+            }
+
+            re = new RegExp("{m[0-9]+}");
+            while (match=re.exec(text)) {
+                index = parseInt(match[0].slice(2, -1));
+                text = text.replace(match, male_names[index]);
+            }
+
+            return text;
+        }
+
+        function formatNoteContent(type, text) {
+
+            text = text.trim();
+
+            if (type=="header") {
+                return (text + " : ");
+            }
+
+            return text;
+        }
+
+        function updateDatePreview(dateStr) {
+            $(".preview .note-subtitle").html(dateStr);
+        }
+
+        function updateNoteContentPreview(type, text) {
+            $(`.preview .note-content-${type}`).text(formatNoteContent(type, anonymise(text)));
+        }
+
+        function setSavingLoading(loading) {
+            if (loading) {
+                $("#loader_saving").css("visibility", "visible");
+                $("#save").attr("disabled", "disabled");
+            } else {
+                $("#loader_saving").css("visibility", "hidden");
+                $("#save").removeAttr("disabled");
+            }
+        }
+
+        $(document).ready(() => {
+
+            $("#button_home").on('click', () => {
+                console.log("enter");
+                window.location = "/";
+            });
+
+            $(".datepicker").flatpickr({
+                dateFormat:"d/m/Y",
+                defaultDate:'today',
+                locale: "fr",
+                onChange: function(selectedDates, dateStr, instance) {
+                   updateDatePreview(dateStr);
+                },
+                onReady: function (selectedDates, dateStr, instance) {
+                    updateDatePreview(dateStr);
+                }
+
+            });
+
+            
+            $(".note-content-header-input")
+                .bind('input propertychange', function() {
+                    updateNoteContentPreview("header", this.value);
+                })
+                .val(note_example["header"]);
+            
+            
+            $(".note-content-body-input")
+            .bind('input propertychange', function() {
+                updateNoteContentPreview("body", this.value);
+            })
+            .val(note_example["body"]);
+
+
+            $(".note-content-footer-input")
+            .bind('input propertychange', function() {
+                updateNoteContentPreview("footer", this.value);
+            })
+            .val(note_example["footer"]);
+
+            $('.preview .note-content-header').text(formatNoteContent("header", note_example["header"]));
+            $('.preview .note-content-body').text(formatNoteContent("body", note_example["body"]));
+            $('.preview .note-content-footer').text(formatNoteContent("footer", note_example["footer"]));
+        });
+        
+
+        $("#save").on("click", () => {
+
+            setSavingLoading(true);
+
+            const data = {
+                "api_key": $(".api-key").val(),
+                "date": $(".preview .note-subtitle").text(),
+                "content": {
+                    "header": $('.preview .note-content-header').html(),
+                    "body": $('.preview .note-content-body').html(),
+                    "footer": $('.preview .note-content-footer').html(),
+                }
+            };
+
+            $.post('/api/note/create', {"data": JSON.stringify(data)}, (response_data) => {
+                
+                setSavingLoading(false);
+
+                if (response_data["error"]===true) {
+                    console.error(response_data);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred',
+                        text: response_data["error_msg"],
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Saved !',
+                        text: `Your note has been saved successfully with id(${response_data["data"]["id_note"]})`,
+                    });
+                }
+
+            }).fail(function(xhr, status, error){
+                console.error(xhr, status, error);
+ 
+                setSavingLoading(false);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred',
+                    html: xhr.responseText,
+                });
+            });
+        });
+
+    </script>
+  </html>

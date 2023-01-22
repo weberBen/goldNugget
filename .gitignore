@@ -1,0 +1,4 @@
+draft/
+*.pyc
+*.db
+venv/

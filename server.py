@@ -9,22 +9,15 @@ from werkzeug.datastructures import ImmutableMultiDict
 import math
 import time
 import traceback
+import config
 
-
-DATABASE = "database.db"
-DEFAULT_PAGE_SIZE = 10
-
-DEBUG = False
-RAISE_EXCEPTION = False
-DISPLAY_TRACE = False
-API_KEY_VALIDATION_THROTTLE_TIME_S = 5
 
 app = Flask(__name__)
 
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = sqlite3.connect(config.DATABASE_PATH)
     return db
 
 
@@ -40,13 +33,13 @@ def close_connection(exception):
         db.close()
 
 def getExceptionMsg(e):
-    if DEBUG:
+    if config.DEBUG:
         output = {
             "type": type(e).__name__,
             "msg": str(e),
         }
 
-        if DISPLAY_TRACE:
+        if config.DISPLAY_TRACE:
             output["trace"] = traceback.format_exc()
 
         return output
@@ -61,7 +54,7 @@ def handle_exception(e):
     if isinstance(e, HTTPException):
         return e
 
-    if DEBUG and RAISE_EXCEPTION:
+    if config.DEBUG and config.RAISE_EXCEPTION:
         raise e
         
     
@@ -119,9 +112,9 @@ def api_note_index():
             try:
                 page_size = int(request.cookies.get("pageSize"))
             except:
-                page_size = DEFAULT_PAGE_SIZE
+                page_size = config.DEFAULT_PAGE_SIZE
         else:
-            page_size = DEFAULT_PAGE_SIZE
+            page_size = config.DEFAULT_PAGE_SIZE
     
     pagination_start = parseIntArgs(request.args.get("paginationStart"), -1) 
     page_number = parseIntArgs(request.args.get("pageNumber"), 1) - 1
@@ -136,8 +129,13 @@ def api_note_index():
         if pagination_start<0:
             cur = db.execute(f'SELECT count(*), MAX(id) FROM notes WHERE deleted=0')
             row = cur.fetchall()[0]
+
             total_item_count = row[0]
             pagination_start = row[1]
+
+            if total_item_count==0: # no data
+                pagination_start = 1
+            
         else:
             cur = db.execute(f'SELECT count(*) FROM notes WHERE id <= ? AND deleted=0', (pagination_start, ))
             total_item_count = cur.fetchall()[0][0]
@@ -333,4 +331,5 @@ def api_note_reaction(note_id, reaction_type):
     return resp
 
 
-app.run(debug=DEBUG)
+if __name__=="__main__":
+    app.run(debug=config.DEBUG)

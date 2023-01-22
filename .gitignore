@@ -2,3 +2,4 @@ draft/
 *.pyc
 *.db
 venv/
+config.py

@@ -7,7 +7,7 @@
 
         <link rel="stylesheet" href="/resource/fonts/google/material/symbols_outlined" />
         <link rel="stylesheet" href="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.min.css" />
-        <link rel="stylesheet" href="/resource/vendor/paginationJs/2.5.0/pagination.min.css" />
+        <link rel="stylesheet" href="/resource/css/paginationJs/2.5.0/pagination.min.css" />
         <link rel="stylesheet" href="/resource/css/helper.css" />
         <link rel="stylesheet" href="/resource/css/header.css" />
         <link rel="stylesheet" href="/resource/css/footer.css" />
@@ -21,6 +21,10 @@
         <style>
             .note-container-template {
                 display: none !important;
+            }
+
+            .no-data {
+                display: none;
             }
         </style>
     </head>
@@ -39,6 +43,10 @@
             </div>
 
             <div id="notes_viewer" class="notes-viewer">
+
+                <div class="no-data">
+                    <span>No data...</span>
+                </div>    
 
                 <div class="note-container note-container-template">
                     <div class="note">
@@ -143,7 +151,7 @@
 
     <script src="/resource/vendor/jquery/3.6.3/jquery.min.js"></script>
     <script src="/resource/vendor/limonte-sweetalert2/11.7.0/sweetalert2.js"></script>
-    <script src="/resource/vendor/paginationJs/2.5.0/pagination-edited.js"></script>
+    <script src="/resource/js/paginationJs/2.5.0/pagination.js"></script>
     <script src="/resource/vendor/hammerJs/2.0.8/hammer.min.js"></script>
 
     <script src="/resource/js/helper.js"></script>
@@ -241,9 +249,13 @@
 
                 window.history.pushState({ path: newUrl }, '', newUrl);
 
+                if (data["total_item_count"]==0) {
+                    $(".no-data").css("display", "block");
+                    console.log("enter");
+                }
 
                 $(".pagination-container").pagination({
-                    dataSource: data["total_item_count"],
+                    dataSource: (data["total_item_count"]==0) ? [] : data["total_item_count"],
                     pageSize: data["page_size"],
                     pageNumber: data["page_number"],
                     showSizeChanger: true,

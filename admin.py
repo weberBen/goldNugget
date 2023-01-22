@@ -2,6 +2,7 @@ import sqlite3
 from base64 import b64encode
 from os import urandom
 import sys
+import config
 
 
 def addUser(email, name, api_key=None):
@@ -91,7 +92,7 @@ if __name__ == "__main__":
         print('\tdelete <id>')
     
     else:
-        db = sqlite3.connect('database.db')
+        db = sqlite3.connect(config.DATABASE_PATH)
         try:
             if args[0]=="user":
                 if args[1]=="create":

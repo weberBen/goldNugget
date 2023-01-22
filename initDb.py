@@ -1,7 +1,8 @@
 import sqlite3
+import config
 
 if __name__ == "__main__":
-    db = sqlite3.connect('database.db')
+    db = sqlite3.connect(config.DATABASE_PATH)
 
     with open('schema.sql', 'r') as f:
         db.cursor().executescript(f.read())

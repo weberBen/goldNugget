@@ -3,6 +3,7 @@ from base64 import b64encode
 from os import urandom
 import sys
 import config
+import json
 
 
 def addUser(email, name, api_key=None):
@@ -58,6 +59,40 @@ def deleteUser(id):
         if cur is not None:
             cur.close()
 
+def findUser(id, type="id"):
+    cur = None
+    try:
+        if type=="id":
+            cur = db.execute("SELECT id, name, email, api_key, deleted FROM users WHERE id=?",
+                (id, )
+            )
+        elif type=="email":
+            cur = db.execute("SELECT id, name, email, api_key, deleted FROM users WHERE email=?",
+                (id, )
+            )
+        elif type=="api_key":
+            cur = db.execute("SELECT id, name, email, api_key, deleted FROM users WHERE api_key=?",
+                (id, )
+            )
+
+        rows = cur.fetchall()
+        if len(rows)==0:
+            raise Exception(f'Invalid record with id({id}, type={type}) on table users')
+
+        row = rows[0]
+
+        return json.dumps({
+            "id": row[0],
+            "name": row[1],
+            "email": row[2],
+            "api_key": row[3],
+            "deleted": False if (row[4]==0) else True,
+        }, sort_keys=True, indent=4)
+    
+    finally:
+        if cur is not None:
+            cur.close()
+
 def deleteNote(id):
     cur = None
     try:
@@ -83,9 +118,10 @@ if __name__ == "__main__":
         print('WARNING: do not forget the quote "<my_arg>" around args')
 
         print("")
-        print("user [create/delete]")
+        print("user [create/delete/find]")
         print('\tcreate "<email>" "<name>" "<token:optional>"')
         print('\tdelete <id>')
+        print('\tfind [Do not enter user personal data here, wait for the prompt]"')
 
         print("")
         print("note [delete]")
@@ -107,8 +143,16 @@ if __name__ == "__main__":
                 elif args[1]=="delete":
                     print(deleteUser(int(args[2])))
                 
+                elif args[1]=="find":
+                    type = input("<type=[id, email, api_key]>: ")
+                    id = input("<id>: ")
+
+                    print(findUser(id, type))
+                
             elif args[0]=="note":
                 if args[1]=="delete":
                     print(deleteNote(int(args[2])))
+            else:
+                print("Command not found")
         finally:
             db.close()

@@ -3,3 +3,4 @@ draft/
 *.db
 venv/
 config.py
+info.html

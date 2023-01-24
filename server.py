@@ -86,6 +86,10 @@ def getCookieExpirationDate():
 def index():
     return send_from_directory("views/", "index.html")
 
+@app.route("/info")
+def info():
+    return send_from_directory("views/", "info.html")
+
 @app.route("/nugget/create")
 def note_create():
     return send_from_directory("views/", "create.html")

@@ -60,6 +60,10 @@
         .info-content-item {
            padding-bottom: 20px;
         }
+
+        .default-value {
+            color: #4e4a52;
+        }
         
 
     </style>
@@ -139,7 +143,7 @@
 
         <div class="header">
             <div id="button_home" class="header-item-home">
-                <span>#Pépites</span>
+                <span>#Pépite</span>
             </div>
         </div>
             
@@ -152,6 +156,9 @@
                     <div class="info-content">
                         <span class="info-content-item"> Use <span class="code"> {fi} </span> with i=1,2,...,6 to automatically replace it with a female name (i.e <span class="code">{f1}</span> will be replaced by <span class="code">Alice</span>) </span>
                         <span class="info-content-item"> Use <span class="code"> {mi} </span> with i=1,2,...,6 to automatically replace it with a male name (i.e <span class="code">{m1}</span> will be replaced by <span class="code">Bob</span>) </span>
+                        <span class="info-content-item"> Make your nugget generic with an explanation/context around it. People outside your company may read it and need to understand</span>
+                        <span class="info-content-item"> No private joke. People outside your company may read it and need to understand</span>
+                        <span class="info-content-item"> Anonymise your nugget by either using other names or write your sentence with <span class="code"> my coworker</span></span>
                     </div>
                 </div>
 
@@ -176,9 +183,9 @@
                                 <span class="note-subtitle"> xx/xx/xxxx </span>
                             </div>
                             <div class="note-body text-center">
-                                <span class="note-content note-content-header"></span>
-                                <span class="note-content note-content-body"></span>
-                                <span class="note-content note-content-footer"></span>
+                                <span class="note-content note-content-header default-value"></span>
+                                <span class="note-content note-content-body default-value"></span>
+                                <span class="note-content note-content-footer default-value"></span>
                             </div>
                             <div class="note-footer">
                                 <span>#Pépite</span>
@@ -213,10 +220,10 @@
     
     <script>
 
-        const note_example = {
-            "header": "J'étais en train de réfléchir en mettant mon doigt devant ma bouche, ce qui sans m'en rendre compte me faisait faire la moustache d'Hitler et avec les sourcils froncés..combo\nMa collègue le remarque et me sors",
+        const noteExample = {
+            "header": "J'étais en train de réfléchir en mettant mon doigt devant ma bouche, ce qui sans m'en rendre compte me faisait faire la moustache d'Hitler et avec les sourcils froncés..combo, quand ma collègue le remarque et me sort",
             "body": "Avec deux doigts c'est mieux",
-            "footer": "Elle aurait pu m'offrir un verre avant tout de même..." ,
+            "footer": "Elle aurait tout de même pu m'offrir un verre avant..." ,
         };
 
 
@@ -242,11 +249,7 @@
         function formatNoteContent(type, text) {
 
             text = text.trim();
-
-            if (type=="header") {
-                return (text + " : ");
-            }
-
+            
             return text;
         }
 
@@ -254,8 +257,43 @@
             $(".preview .note-subtitle").html(dateStr);
         }
 
-        function updateNoteContentPreview(type, text) {
-            $(`.preview .note-content-${type}`).text(formatNoteContent(type, anonymise(text)));
+        function updateNoteContentPreview(type, text, resetDefault=false, isDefault=false) {
+
+            if(resetDefault) {
+                let elem;
+
+                elem = $('.preview .note-content-header');
+                if(elem.hasClass("default-value")) {
+                    elem.text("");
+                }
+
+                elem = $('.preview .note-content-body');
+                if(elem.hasClass("default-value")) {
+                    elem.text("");
+                }
+
+                elem = $('.preview .note-content-footer');
+                if(elem.hasClass("default-value")) {
+                    elem.text("");
+                }
+            }
+            var newText = formatNoteContent(type, anonymise(text));
+            var elem = $(`.preview .note-content-${type}`);
+
+            elem.text(newText);
+
+            if (isDefault || newText.length==0) {
+                elem.addClass("default-value");
+
+            } else {
+                elem.removeClass("default-value");
+            }
+        }
+
+        function getContentPreview(type) {
+            const text = $(`.preview .note-content-${type}`).text();
+
+            return text;
         }
 
         function setSavingLoading(loading) {
@@ -265,6 +303,30 @@
             } else {
                 $("#loader_saving").css("visibility", "hidden");
                 $("#save").removeAttr("disabled");
+            }
+        }
+
+        function resetPreview(example=null) {
+            let header = "";
+            let body = "";
+            let footer = "";
+
+            if (example) {
+                header = example["header"];
+                body = example["body"];
+                footer = example["footer"];
+            }
+
+            updateNoteContentPreview("header", header, false, true);
+            updateNoteContentPreview("body", body, false, true);
+            updateNoteContentPreview("footer", footer, false, true);
+        }
+
+        function noteInputChange(type, value) {
+            if ($(".note-content-header-input").val().length==0 && $(".note-content-body-input").val().length==0 && $(".note-content-footer-input").val().length==0) {
+                    resetPreview(noteExample);
+            } else {
+                updateNoteContentPreview(type, value, true);
             }
         }
 
@@ -285,32 +347,45 @@
 
             
             $(".note-content-header-input")
-                .bind('input propertychange', function() {
-                    updateNoteContentPreview("header", this.value);
-                })
-                .val(note_example["header"]);
+            .bind('input propertychange', function() {
+                noteInputChange("header", this.value);
+            })
+            .attr("placeholder", "[Nugget header] " + noteExample["header"])
+            .val("");
             
             
             $(".note-content-body-input")
             .bind('input propertychange', function() {
-                updateNoteContentPreview("body", this.value);
+                noteInputChange("body", this.value);
             })
-            .val(note_example["body"]);
+            .attr("placeholder", "[Nugget body] " + noteExample["body"])
+            .val("");
 
 
             $(".note-content-footer-input")
             .bind('input propertychange', function() {
-                updateNoteContentPreview("footer", this.value);
+                noteInputChange("footer", this.value);
             })
-            .val(note_example["footer"]);
+            .attr("placeholder", "[Nugget footer] " + noteExample["footer"])
+            .val("");
 
-            $('.preview .note-content-header').text(formatNoteContent("header", note_example["header"]));
-            $('.preview .note-content-body').text(formatNoteContent("body", note_example["body"]));
-            $('.preview .note-content-footer').text(formatNoteContent("footer", note_example["footer"]));
+            resetPreview(noteExample);
         });
         
 
         $("#save").on("click", () => {
+
+            if($(".note-content-header-input").val().length==0 && $(".note-content-body-input").val().length==0
+                && $(".note-content-footer-input").val().length==0) {
+                 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Empty nugget',
+                    text: "Please edit the example nugget"
+                });
+
+                return;
+            }
 
             setSavingLoading(true);
 

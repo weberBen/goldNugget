@@ -89,10 +89,18 @@
             <div class="screen-center">
                 
 
-                <div class="info-container" href="#apiKey" >
+                <div class="info-container" href="#general" >
+                    <span class="info-title"> General </span>
+                    <div class="info-content">
+                        <span href="#request" class="info-content-item"> For request use this <a id="requestForm" href="" target="_blank" rel="noopener noreferrer">form</a></span>
+                        <span href="#report" class="info-content-item"> For report use this  <a id="reportForm" href="" target="_blank" rel="noopener noreferrer">form</a></span>
+                    </div>
+                </div>
+
+                <div class="info-container" href="#general" >
                     <span class="info-title"> Api key Info </span>
                     <div class="info-content">
-                        <span class="info-content-item"> To get an API key please fill up the following  <a href="https://google.com" target="_blank" rel="noopener noreferrer">form</a></span>
+                        <span href="#apiKey-get" class="info-content-item"> To get an API key use this <a id="apiKeyForm" href="" target="_blank" rel="noopener noreferrer">form</a></span>
                     </div>
                 </div>
 
@@ -109,10 +117,19 @@
     
     <script>
 
+
+        const info = {
+            apiKeyForm: "https://google.com",
+            requestForm: "https://google.com",
+            reportForm: "https://google.com",
+        }
+
         
 
         $(document).ready(() => {
-            
+            $('#apiKeyForm').attr("href", info.apiKeyForm);
+            $('#requestForm').attr("href", info.requestForm);
+            $('#reportForm').attr("href", info.reportForm);
         });
         
 

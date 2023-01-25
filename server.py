@@ -10,6 +10,7 @@ import math
 import time
 import traceback
 import config
+from helper import formatNoteContent
 
 
 app = Flask(__name__)
@@ -262,11 +263,7 @@ def api_note_create():
     
     record = {
         "note_date": note_date,
-        "note_content": json.dumps({
-            "header": html.escape(data["content"]["header"], True),
-            "body": html.escape(data["content"]["body"], True),
-            "footer": html.escape(data["content"]["footer"], True)
-        }, separators=(',', ':')),
+        "note_content": formatNoteContent(data["content"]),
     }
 
     cur = None

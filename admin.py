@@ -4,7 +4,8 @@ from os import urandom
 import sys
 import config
 import json
-
+import ftfy
+from helper import formatNoteContent
 
 def addUser(email, name, api_key=None):
     token = None
@@ -109,6 +110,53 @@ def deleteNote(id):
         if cur is not None:
             cur.close()
 
+def getContentNote(id):
+    cur = None
+    try:
+        cur = db.execute("SELECT id, deleted, note_content deleted FROM notes WHERE id=?",
+            (id, )
+        )
+
+        rows = cur.fetchall()
+        if len(rows)==0:
+            raise Exception(f'Invalid record with id({id}) on table notes')
+
+        row = rows[0]
+
+        data = json.loads(row[2])
+
+        return json.dumps({
+            "id": row[0],
+            "deleted": False if (row[1]==0) else True,
+            "content": {
+                "header": ftfy.ftfy(data["header"]),
+                "body": ftfy.ftfy(data["body"]),
+                "footer": ftfy.ftfy(data["footer"]),
+            }
+        }, sort_keys=False, indent=4, ensure_ascii=False)
+    
+    finally:
+        if cur is not None:
+            cur.close()
+
+def setContentNote(id, data):
+    data = json.loads(data)
+
+    if data["id"]!=id:
+        raise Exception("Note data id does not match given id")
+
+    cur = None
+    try:
+        cur = db.execute("UPDATE notes SET note_content=? WHERE id=?",
+            (formatNoteContent(data["content"]), id, )
+        )
+
+        db.commit()
+    
+    finally:
+        if cur is not None:
+            cur.close()
+
 if __name__ == "__main__":
 
     args = sys.argv[1:]
@@ -124,8 +172,9 @@ if __name__ == "__main__":
         print('\tfind [Do not enter user personal data here, wait for the prompt]"')
 
         print("")
-        print("note [delete]")
+        print("note")
         print('\tdelete <id>')
+        print('\tcontent [get/set] <id>')
     
     else:
         db = sqlite3.connect(config.DATABASE_PATH)
@@ -152,6 +201,13 @@ if __name__ == "__main__":
             elif args[0]=="note":
                 if args[1]=="delete":
                     print(deleteNote(int(args[2])))
+                if args[1]=="content":
+                    if args[2]=="get":
+                        print(getContentNote(int(args[3])))
+                    elif args[2]=="set":
+                        data = input('data minified { ..., content: {...} }: ')
+                        print(setContentNote(int(args[3]), data))
+
             else:
                 print("Command not found")
         finally:

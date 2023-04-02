@@ -1,6 +1,6 @@
 # Golden Nuggets
 
-Project like [VDM](https://www.viedemerde.fr/) and [nuit sans follie](https://nuitsansfolie.com/) to allow co-workers to share their golden nuggets (double meaning sentences without the person involved realizing it).
+Project like [VDM](https://www.viedemerde.fr/) and [nuit sans follie](https://nuitsansfolie.com/) to allow co-workers to share their golden nuggets (double meaning sentences without the person involved realizing it). Credit for the idea goes to my human resources director who had a whole dore cover of post-it with it.
 
 For example : 
 ```

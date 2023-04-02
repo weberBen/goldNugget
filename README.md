@@ -27,11 +27,12 @@ Disclaimer: projet made in few hours with some simple `flask` server and uggly r
 In the root of the project folder start the script `admin.py` where you can create/delete/find user and delete/edit content of a nugget
 
 # Default credentials
-
-|------------|------------------------------------------------------------------------------------------|
-| user email | admin@admin.com                                                                          |
-| user name  | admin                                                                                    |
-| user token | abc123 |
+  
+| field      | value             |
+|------------|-------------------|
+| user email | admin@admin.com   |
+| user name  | admin             |
+| user token | abc123            |
 
 
 # Installation

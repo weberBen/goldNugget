@@ -1,11 +1,11 @@
-DEBUG = False
-RAISE_EXCEPTION = False
+DEBUG = True
+RAISE_EXCEPTION = True
 DISPLAY_TRACE = False
 
-DATABASE_PATH = "/home/user/www/flask/database.db"
+DATABASE_PATH = "/home/<user>/www/flask/database.db"
 
 DEFAULT_PAGE_SIZE = 10
 
 API_KEY_VALIDATION_THROTTLE_TIME_S = 5
 
-SECRET_KEY = "my_secret"
+SECRET_KEY = "is2fM58fzLc+HPV+X3GHUHCSnK1huSx//T2Ht1kYoqFmNv5xpjFLqYQ+mrDWJFDa58jFDkY9jhnodhYtegpd@d"

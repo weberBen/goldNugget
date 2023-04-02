@@ -4,7 +4,7 @@ import logging
 import sys
 import os
 
-APP_PATH = "/home/user/www/"
+APP_PATH = "/home/<user>/www/"
 
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0, APP_PATH)

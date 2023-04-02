@@ -16,7 +16,6 @@ Disclaimer: projet made in few hours with some simple `flask` server and uggly r
 # Routes
 
 | /              | dasboard         |
-|----------------|------------------|
 | /nugget/<id>   | show nugget <id> |
 | /nugget/create | create nugget    |
 | /info          | info page        |

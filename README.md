@@ -15,6 +15,8 @@ Disclaimer: projet made in few hours with some simple `flask` server and uggly r
 
 # Routes
 
+| routes         | purpose          |
+|----------------|------------------|
 | /              | dasboard         |
 | /nugget/<id>   | show nugget <id> |
 | /nugget/create | create nugget    |
@@ -26,8 +28,8 @@ In the root of the project folder start the script `admin.py` where you can crea
 
 # Default credentials
 
-| user email | admin@admin.com                                                                          |
 |------------|------------------------------------------------------------------------------------------|
+| user email | admin@admin.com                                                                          |
 | user name  | admin                                                                                    |
 | user token | abc123 |
 

@@ -66,7 +66,6 @@ python3 admin.py user create admin@admin.fr admin
 >> API key :
 lPZrMpscUcjq5VCMLROyyEdtkMri3wXxXmzxSrkTxTygKiG6JyXqcwppWVbzDTV7/t3WiBFQDRi02ftwLJ4DpA==
 ```
-
 It will output an API token usefull for creating new nugget
 
 # Run
